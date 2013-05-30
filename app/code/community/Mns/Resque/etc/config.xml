@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<config>
+    <modules>
+        <Mns_Resque>
+            <version>0.0.1</version>
+        </Mns_Resque>
+    </modules>
+
+    <global>
+        <models>
+            <mnsresque>
+                <class>Mns_Resque_Model</class>
+                <resourceModel>mnsresque_resource</resourceModel>
+            </mnsresque>
+
+            <mnsresque_resource>
+                <class>Mns_Resque_Model_Resource</class>
+            </mnsresque_resource>
+        </models>
+    </global>
+
+    <default>
+        <mnsresque>
+            <redis>
+                <backend>localhost:6379</backend>
+                <database>4</database>
+            </redis>
+        </mnsresque>
+    </default>
+</config>
