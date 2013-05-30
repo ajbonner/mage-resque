@@ -1,51 +1,61 @@
 {
-  "require": {
-    "php": ">=5.3.0",
-    "chrisboulton/php-resque": "1.2.x",
-    "fbrnc/Aoe_Profiler": "*",
-    "ajbonner/Mage-Test": "*"
-  },
-  "repositories": [
+    "name": "ajbonner/mage-resque",
+    "description": "Magento integration for php-rescue the redis backed job queue library",
+    "type": "magento-module",
+    "license": "MIT",
+    "authors": [
     {
-      "type": "vcs",
-      "url": "https://github.com/fbrnc/Aoe_Profiler"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/magento-hackathon/magento-composer-installer"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/ajbonner/Mage-Test"
-    },
-    {
-      "type": "composer",
-      "url": "http://packages.firegento.com"
+        "name":"Aaron Bonner",
+        "email":"aaron@aaronbonner.io"
     }
-  ],
-  "require-dev": {
-  },
-  "autoload": {
-    "psr-0": {
-      "": [
-        "vendor/magento/app",
-        "vendor/magento/app/code/local",
-        "vendor/magento/app/code/community",
-        "vendor/magento/app/code/core",
-        "vendor/magento/lib",
-        "app",
-        "app/code/local",
-        "app/code/community",
-        "app/code/core",
-        "lib"
-      ]
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "chrisboulton/php-resque": "1.2.x",
+    },
+    "require-dev": {
+        "fbrnc/Aoe_Profiler": "*",
+        "ajbonner/Mage-Test": "*"
+    },
+    "repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.com/fbrnc/Aoe_Profiler"
+    },
+    {
+        "type": "vcs",
+        "url": "https://github.com/magento-hackathon/magento-composer-installer"
+    },
+    {
+        "type": "vcs",
+        "url": "https://github.com/ajbonner/Mage-Test"
+    },
+    {
+        "type": "composer",
+        "url": "http://packages.firegento.com"
     }
-  },
-  "extra":{
-    "magento-root-dir": "./"
-  },
-  "config": {
-    "bin-dir": "shell"
-  },
-  "minimum-stability": "dev"
+    ],
+    "autoload": {
+        "psr-0": {
+            "": [
+                "vendor/magento/app",
+                "vendor/magento/app/code/local",
+                "vendor/magento/app/code/community",
+                "vendor/magento/app/code/core",
+                "vendor/magento/lib",
+                "app",
+                "app/code/local",
+                "app/code/community",
+                "app/code/core",
+                "lib"
+            ]
+        }
+    },
+    "extra":{
+        "magento-root-dir": "./"
+    },
+    "config": {
+        "bin-dir": "shell"
+    },
+    "minimum-stability": "dev"
 }
