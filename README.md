@@ -27,7 +27,7 @@ If you do not have an existing Magento Composer Installer composer.json file def
 
 	{
 	    "require": {
-			"ajbonner/mage-resque": "*""
+	        "ajbonner/mage-resque": "*"
 	    },
 	    "repositories": [
 	    {
@@ -37,7 +37,7 @@ If you do not have an existing Magento Composer Installer composer.json file def
 	    {
 	        "type": "vcs",
 	        "url": "https://github.com/ajbonner/mage-resque"
-	    },
+	    }
 	    ],
 	    "autoload": {
 	        "psr-0": {

@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "chrisboulton/php-resque": "1.2.x",
+        "chrisboulton/php-resque": "1.2.x"
     },
     "require-dev": {
         "fbrnc/Aoe_Profiler": "*",
