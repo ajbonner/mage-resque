@@ -1,0 +1,3 @@
+app/etc/modules/*						    app/etc/modules/
+app/code/community/Mns/Resque				app/code/community/Mns/Resque
+shell/resque.php                            shell/resque.php
