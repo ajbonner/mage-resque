@@ -10,9 +10,9 @@ functionality of the [PHP Resque]
 Mage Resque uses the [MIT](http://opensource.org/licenses/MIT) opensource licence. Unless specifically stated otherwise, terms of use are as laid out in the LICENCE file.
 
 ### Requirements
-PHP 5.3+
-Redis 2.2+
-ext-pcntl
+- PHP 5.3+
+- Redis 2.2+
+- ext-pcntl
 
 ### Installation
 Mage Resque uses [Composer](http://getcomposer.org) and [Magento Composer Installer](https://github.com/magento-hackathon/magento-composer-installer) to handle installation of the module and its
