@@ -88,7 +88,8 @@ PHP Resque has two functions, 1) to add jobs to a redis backed queue, and 2) to 
 
 As an example, let's add a simple job to the queue that writes a message to Magento's system log. Mage Resque bundles Mns_Resque_Model_Job_Logmessage to do just this.
 
-    Mage::getModel('mnsresque/resque')->addJob(
+	$resque = Mage::getSingleton('mnsresque/factory')->create();
+    $resque->addJob(
     	'Mns_Resque_Model_Job_Logmessage',
     	array('message'=>'foo'
     );
