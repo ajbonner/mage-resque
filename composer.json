@@ -11,7 +11,8 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "chrisboulton/php-resque": "1.2.x"
+        "chrisboulton/php-resque": "1.2.x",
+        "magento-hackathon/magento-composer-installer": "*"
     },
     "require-dev": {
         "fbrnc/Aoe_Profiler": "*",
