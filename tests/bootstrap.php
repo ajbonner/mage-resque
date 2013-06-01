@@ -1,6 +1,6 @@
 <?php
 
-$basedir = realpath(__DIR__ . '/../');
+$basedir = realpath(__DIR__ . '/../../../../');
 $includePath = array(
     $basedir,
     $basedir . '/lib/',

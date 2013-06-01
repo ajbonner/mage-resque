@@ -1,13 +1,11 @@
 # Mage Resque
 
-Mage Resque is a magento module providing a thin wrapper around the
-functionality of the [PHP Resque]
-(https://github.com/chrisboulton/php-resque/) library. PHP Resque is a PHP Implementation of Ruby's Resque a Redis backed background job processing library.
+Mage Resque is a lightweight [http://www.magentocommerce.com](Magento) module  implementing the [PHP Resque](https://github.com/chrisboulton/php-resque/) library. PHP Resque is a PHP Implementation of Ruby's [Resque](https://github.com/resque/resque), a Redis backed background job processing library.
 
 ## Getting started
 
 ### Licence
-Mage Resque uses the [MIT](http://opensource.org/licenses/MIT) opensource licence. Unless specifically stated otherwise, terms of use are as laid out in the LICENCE file.
+Mage Resque is covered by the [MIT](http://opensource.org/licenses/MIT) opensource licence. Unless specifically stated otherwise, terms of use are as laid out in the included LICENCE file.
 
 ### Requirements
 - PHP 5.3+
@@ -16,14 +14,14 @@ Mage Resque uses the [MIT](http://opensource.org/licenses/MIT) opensource licenc
 
 ### Installation
 Mage Resque uses [Composer](http://getcomposer.org) and [Magento Composer Installer](https://github.com/magento-hackathon/magento-composer-installer) to handle installation of the module and its
-dependencies. To install Mage Resque you will need a copy of _composer.phar_. If you don't have it availble already, run the following commands from your terminal.
+dependencies. To install Mage Resque you will need a copy of _composer.phar_ in your path. If you do not have it availble, run the following commands from your terminal.
 
     $ curl -sS https://getcomposer.org/installer | php
     $ chmod a+x composer.phar
     
-If you are already using Magento Composer Installer and have an existing composer.json, simply add _https://github.com/ajbonner/mage-resque_ to the repositories list and _ajbonner/mage-resque_ as a required dependency for your proejct. 
+If you are already using Magento Composer Installer and have an existing composer.json, add _https://github.com/ajbonner/mage-resque_ to the repositories list and _ajbonner/mage-resque_ as a required dependency for your proejct. That's it!
 
-If you do not have an existing Magento Composer Installer composer.json file defined you can use the following template
+If you do not have an existing Magento Composer Installer composer.json file defined, you can use the following template.
 
 	{
 	    "require": {
@@ -76,12 +74,12 @@ If you do not have an existing Magento Composer Installer composer.json file def
 	    "minimum-stability": "dev"
 	}
     
-Now to install Mage Resque and its dependencies run composer.phar
+To install Mage Resque and its dependencies just run composer.phar.
 
     $ ./composer.phar install
 
 ### Configuration
-PHP Resque is a Redis backed job queue, and you will need to define a Redis server and default database. The simplest we to do this is to add the following xml snippet to local.xml
+PHP Resque is a Redis backed job queue, and you will need access to a running Redis instance. To use a particular Redis server and database, add the following xml snippet to local.xml.
 
     <!-- This is a child node of config for Magento CE -->
     <default>
@@ -93,10 +91,10 @@ PHP Resque is a Redis backed job queue, and you will need to define a Redis serv
         </mnsredis>
     </default>
 
-If you use Redis for magento caching or as session store, ensure you select an alternate database exclusively for Mage Resque. 
+If you use Redis for Magento caching or as session store, e.g. you use [one of](https://github.com/colinmollenhour/Cm_Cache_Backend_Redis) Colin Mollenhour's [excellent modules](https://github.com/colinmollenhour/Cm_RedisSession), then make sure you select an alternate database that is exclusively for Mage Resque. 
 
 ### Usage
-PHP Resque has two functions, 1) to add jobs to a redis backed queue, and 2) to process the job queue, executing tasks in the background.
+PHP Resque has two functions, add jobs to a Redis backed queue, and to run the job queue.
 
 As an example, let's add a simple job to the queue that writes a message to Magento's system log. Mage Resque bundles Mns_Resque_Model_Job_Logmessage to do just this.
 
@@ -106,8 +104,8 @@ As an example, let's add a simple job to the queue that writes a message to Mage
     	array('message'=>'foo'
     );
 
-You can pass any class name to addJob that implements a process() method. You can find out more about job classes in the [PHP Redis README](https://github.com/chrisboulton/php-resque/blob/master/README.md).
+You can pass any class name to addJob that implements a process() method. You can find out more about how Job classes work in the [PHP Redis README](https://github.com/chrisboulton/php-resque/blob/master/README.md).
 
-To actually process the queue and run background jobs, Mage Resque provides a job runner in the shell directory, to start it simply run
+To actually process the queue and run background jobs, Mage Resque provides a job runner in the shell directory. To start it run the following command from your terminal.
 
     $ php shell/resque.php --daemon
