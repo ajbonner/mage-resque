@@ -29,6 +29,10 @@ If you do not have an existing Magento Composer Installer composer.json file def
 	    "require": {
 	        "ajbonner/mage-resque": "*"
 	    },
+        "require-dev": {
+            "fbrnc/Aoe_Profiler": "*",
+            "ajbonner/Mage-Test": "*"
+        },
 	    "repositories": [
 	    {
 	        "type": "vcs",
@@ -37,7 +41,15 @@ If you do not have an existing Magento Composer Installer composer.json file def
 	    {
 	        "type": "vcs",
 	        "url": "https://github.com/ajbonner/mage-resque"
-	    }
+	    },
+        {
+            "type": "vcs",
+            "url": "https://github.com/ajbonner/Mage-Test"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/fbrnc/Aoe_Profiler"
+        }
 	    ],
 	    "autoload": {
 	        "psr-0": {

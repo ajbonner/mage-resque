@@ -14,26 +14,10 @@
         "chrisboulton/php-resque": "1.2.x",
         "magento-hackathon/magento-composer-installer": "*"
     },
-    "require-dev": {
-        "fbrnc/Aoe_Profiler": "*",
-        "ajbonner/Mage-Test": "*"
-    },
     "repositories": [
     {
         "type": "vcs",
-        "url": "https://github.com/fbrnc/Aoe_Profiler"
-    },
-    {
-        "type": "vcs",
         "url": "https://github.com/magento-hackathon/magento-composer-installer"
-    },
-    {
-        "type": "vcs",
-        "url": "https://github.com/ajbonner/Mage-Test"
-    },
-    {
-        "type": "composer",
-        "url": "http://packages.firegento.com"
     }
     ],
     "autoload": {
