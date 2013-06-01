@@ -27,10 +27,10 @@ If you do not have an existing Magento Composer Installer composer.json file def
 	    "require": {
 	        "ajbonner/mage-resque": "*"
 	    },
-        "require-dev": {
-            "fbrnc/Aoe_Profiler": "*",
-            "ajbonner/Mage-Test": "*"
-        },
+	    "require-dev": {
+	        "fbrnc/Aoe_Profiler": "*",
+	        "ajbonner/Mage-Test": "*"
+	    },
 	    "repositories": [
 	    {
 	        "type": "vcs",
@@ -38,33 +38,21 @@ If you do not have an existing Magento Composer Installer composer.json file def
 	    },
 	    {
 	        "type": "vcs",
+	        "url": "https://github.com/ajbonner/mage-composer-autoload"
+	    },
+	    {
+	        "type": "vcs",
 	        "url": "https://github.com/ajbonner/mage-resque"
 	    },
-        {
-            "type": "vcs",
-            "url": "https://github.com/ajbonner/Mage-Test"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/fbrnc/Aoe_Profiler"
-        }
-	    ],
-	    "autoload": {
-	        "psr-0": {
-	            "": [
-	                "vendor/magento/app",
-	                "vendor/magento/app/code/local",
-	                "vendor/magento/app/code/community",
-	                "vendor/magento/app/code/core",
-	                "vendor/magento/lib",
-	                "app",
-	                "app/code/local",
-	                "app/code/community",
-	                "app/code/core",
-	                "lib"
-	            ]
-	        }
+	    {
+	        "type": "vcs",
+	        "url": "https://github.com/ajbonner/Mage-Test"
 	    },
+	    {
+	        "type": "vcs",
+	        "url": "https://github.com/fbrnc/Aoe_Profiler"
+	    }
+	    ],
 	    "extra":{
 	        "magento-root-dir": "./"
 	    },
@@ -109,3 +97,14 @@ You can pass any class name to addJob that implements a process() method. You ca
 To actually process the queue and run background jobs, Mage Resque provides a job runner in the shell directory. To start it run the following command from your terminal.
 
     $ php shell/resque.php --daemon
+    
+### Running Unit Tests
+Mage Resque comes bundled with a Unit Test Suite. This suite serves as a regression safety net and as rough documentation on the use the module. To execute the tests you will need to install Mage Resque's development dependencies. 
+
+    $ composer.phar install --dev
+   
+If you have ran _composer.phar install_, you will need to delete composer.lock and the vendor directory, then re-run install with the --dev argument.
+    
+To run the tests, in the magento root directory, issue the following command from your terminal.
+
+    $ phpunit -c vendor/ajbonner/mage-resque/tests/phpunit.xml
