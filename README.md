@@ -29,7 +29,7 @@ If you do not have an existing Magento Composer Installer composer.json file def
 	    },
 	    "require-dev": {
 	        "fbrnc/Aoe_Profiler": "*",
-	        "ajbonner/Mage-Test": "*"
+	        "MageTest/Mage-Test": "*"
 	    },
 	    "repositories": [
 	    {
@@ -46,7 +46,7 @@ If you do not have an existing Magento Composer Installer composer.json file def
 	    },
 	    {
 	        "type": "vcs",
-	        "url": "https://github.com/ajbonner/Mage-Test"
+	        "url": "https://github.com/MageTest/Mage-Test"
 	    },
 	    {
 	        "type": "vcs",
