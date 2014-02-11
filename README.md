@@ -11,6 +11,7 @@ Mage Resque is covered by the [MIT](http://opensource.org/licenses/MIT) opensour
 - PHP 5.3+
 - Redis 2.2+
 - ext-pcntl
+- Magento 1.7+
 
 ### Installation
 Mage Resque uses [Composer](http://getcomposer.org) and [Magento Composer Installer](https://github.com/magento-hackathon/magento-composer-installer) to handle installation of the module and its
@@ -19,9 +20,9 @@ dependencies. To install Mage Resque you will need a copy of _composer.phar_ in 
     $ curl -sS https://getcomposer.org/installer | php
     $ chmod a+x composer.phar
     
-If you are already using Magento Composer Installer and have an existing composer.json, add _https://github.com/ajbonner/mage-resque_ to the repositories list and _ajbonner/mage-resque_ as a required dependency for your proejct. That's it!
+If you are already using Magento Composer Installer and have an existing _composer.json_, add _https://github.com/ajbonner/mage-resque_ to the repositories list and _ajbonner/mage-resque_ as a required dependency for your project. That's it!
 
-If you do not have an existing Magento Composer Installer composer.json file defined, you can use the following template.
+If you do not have an existing Magento Composer Installer _composer.json_ file defined, you can use the following template.
 
 	{
 	    "require": {
@@ -38,7 +39,7 @@ If you do not have an existing Magento Composer Installer composer.json file def
 	    },
 	    {
 	        "type": "vcs",
-	        "url": "https://github.com/ajbonner/mage-composer-autoload"
+	        "url": "https://github.com/ajbonner/magento-composer-autoload"
 	    },
 	    {
 	        "type": "vcs",
@@ -79,10 +80,10 @@ PHP Resque is a Redis backed job queue, and you will need access to a running Re
         </mnsredis>
     </default>
 
-If you use Redis for Magento caching or as session store, e.g. you use [one of](https://github.com/colinmollenhour/Cm_Cache_Backend_Redis) Colin Mollenhour's [excellent modules](https://github.com/colinmollenhour/Cm_RedisSession), then make sure you select an alternate database that is exclusively for Mage Resque. 
+If you use Redis for Magento caching or as session store, e.g. you use [one of](https://github.com/colinmollenhour/Cm_Cache_Backend_Redis) Colin Mollenhour's [excellent modules](https://github.com/colinmollenhour/Cm_RedisSession), then make sure you select an alternate database, or better yet, a separate Redis instance, that is exclusively for Mage Resque. 
 
 ### Usage
-PHP Resque has two functions, add jobs to a Redis backed queue, and to run the job queue.
+PHP Resque has two functions, 1. to add jobs to a Redis backed queue, and 2. to run the job queue.
 
 As an example, let's add a simple job to the queue that writes a message to Magento's system log. Mage Resque bundles Mns_Resque_Model_Job_Logmessage to do just this.
 
@@ -94,17 +95,17 @@ As an example, let's add a simple job to the queue that writes a message to Mage
 
 You can pass any class name to addJob that implements a process() method. You can find out more about how Job classes work in the [PHP Redis README](https://github.com/chrisboulton/php-resque/blob/master/README.md).
 
-To actually process the queue and run background jobs, Mage Resque provides a job runner in the shell directory. To start it run the following command from your terminal.
+To process the queue and run background jobs, Mage Resque provides a job runner in the shell directory. To start it run the following command from your terminal.
 
     $ php shell/resque.php --daemon
     
 ### Running Unit Tests
-Mage Resque comes bundled with a Unit Test Suite. This suite serves as a regression safety net and as rough documentation on the use the module. To execute the tests you will need to install Mage Resque's development dependencies. 
+Mage Resque comes bundled with a UnitTest Suite. This suite serves as a regression safety net and as rough documentation on the use of the module. To execute the tests you will need to install Mage Resque's development dependencies. 
 
     $ composer.phar install --dev
    
 If you have ran _composer.phar install_, you will need to delete composer.lock and the vendor directory, then re-run install with the --dev argument.
     
-To run the tests, in the magento root directory, issue the following command from your terminal.
+To run the tests, in your Magento root directory, issue the following command from your terminal.
 
     $ phpunit -c vendor/ajbonner/mage-resque/tests/phpunit.xml
