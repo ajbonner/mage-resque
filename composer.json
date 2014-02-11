@@ -1,5 +1,6 @@
 {
     "name": "ajbonner/mage-resque",
+    "homepage": "https://github.com/ajbonner/mage-rescue",
     "description": "Magento integration for php-rescue the redis backed job queue library",
     "type": "magento-module",
     "license": "MIT",
