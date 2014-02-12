@@ -7,8 +7,8 @@ class Mns_Resque_Model_Factory
      */
     public function create()
     {
-        $this->configureResque(Mage::getModel('mnsresque/config'));
         $resqueClient = new Resque();
+        $this->configureResque(Mage::getModel('mnsresque/config'));
         return Mage::getModel('mnsresque/resque', array('resque' => $resqueClient));
     }
 

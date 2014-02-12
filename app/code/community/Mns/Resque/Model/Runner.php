@@ -24,53 +24,63 @@ class Mns_Resque_Model_Runner extends Mage_Core_Model_Abstract
 
     /**
      * @return void
+     * @throws Exception
      */
     public function start()
     {
-        $this->configureRedisBackend($this->getConfig());
-        $this->configureLog($this->getLogLevel());
-        $this->configureQueue($this->getQueue());
-        $path = Mage::getBaseDir('shell') . 'resque';
+        if (! $this->getConfig()) {
+            throw new Exception('Cannot start resque runner without redis config set');
+        }
+        $command = $this->buildShellCommand($this->getConfig(), $this->getLogLevel(), $this->getQueue());
+        system($command);
     }
 
     /**
      * @param Mns_Resque_Model_Config $config
-     * @return $this
+     * @param string $logLevel
+     * @param string $queue
+     * @return string
      */
-    public function configureRedisBackend($config)
+    protected function buildShellCommand($config, $logLevel, $queue)
     {
-        putenv('REDIS_BACKEND', $config->getRedisBackend());
-        putenv('REDIS_BACKEND_DB', $config->getDatabase());
-
-        return $this;
+        return sprintf('REDIS_BACKEND=%s REDIS_BACKEND_DB=%s QUEUE=%s %s %s',
+            $config->getRedisBackend(),
+            $config->getDatabase(),
+            $this->getQueueEnv($queue),
+            $this->getLogEnv($logLevel),
+            Mage::getBaseDir() . DS . 'shell' . DS . 'resque');
     }
+
 
     /**
      * @param string $logLevel
-     * @return $this
+     * @return string
      */
-    protected function configureLog($logLevel)
+    protected function getLogEnv($logLevel)
     {
+        $logEnv = '';
+
         switch ($logLevel) {
             case self::LOG_NORMAL:
-                putenv('VERBOSE=1');
+                $logEnv = 'VERBOSE=1';
                 break;
             case self::LOG_VERBOSE:
-                putenv('VVERBOSE=1');
+                $logEnv = 'VVERBOSE=1';
                 break;
             default:
-                break;
         }
 
-        return $this;
+        return $logEnv;
     }
 
-    protected function configureQueue($queue)
+    /**
+     * @param string $queue
+     * @return string
+     */
+    protected function getQueueEnv($queue)
     {
         $queue = ($queue != '') ? $queue : '*';
 
-        putenv("QUEUE=$queue");
-
-        return $this;
+        return $queue;
     }
 }
