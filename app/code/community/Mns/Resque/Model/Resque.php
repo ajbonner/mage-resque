@@ -10,17 +10,38 @@ class Mns_Resque_Model_Resque extends Mage_Core_Model_Abstract
 {
     const DEFAULT_QUEUE = 'default';
 
+    const JOB_STATUS_WAITING = Resque_Job_Status::STATUS_WAITING;
+
     /**
-     * @param string $job
+     * @param string $jobClassName
      * @param array $params
-     * @return string
+     * @return string tracking token issued by backend
      */
-    public function addJob($job, $params)
+    public function addJob($jobClassName, $params)
     {
         $trackingToken = $this->getResque()->enqueue(
-            self::DEFAULT_QUEUE, $job, $params, true);
+            self::DEFAULT_QUEUE, $jobClassName, $params, true);
 
         return $trackingToken;
+    }
+
+    /**
+     * @param string $trackingToken
+     * @return mixed
+     */
+    public function status($trackingToken)
+    {
+        $status = new Resque_Job_Status($trackingToken);
+
+        return $status->get();
+    }
+
+    /**
+     * @return Resque_Job
+     */
+    public function popNextJob()
+    {
+        return Resque::reserve(self::DEFAULT_QUEUE);
     }
 
     /**
@@ -41,7 +62,7 @@ class Mns_Resque_Model_Resque extends Mage_Core_Model_Abstract
     }
 
     /**
-     * @return array
+     * @return array collection containing names of available queues
      */
     public function getQueues()
     {
