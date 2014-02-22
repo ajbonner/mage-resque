@@ -28,6 +28,9 @@ class Mns_Shell_Resque extends Mage_Shell_Abstract
         return $resque->addJob($jobClassName, $params);
     }
 
+    /**
+     * @return int|void
+     */
     protected function startResqueDaemon()
     {
         $params = array(
@@ -35,7 +38,7 @@ class Mns_Shell_Resque extends Mage_Shell_Abstract
             'log_level' => Mns_Resque_Model_Runner::LOG_NORMAL,
             'queue' => '*');
 
-        Mage::getModel('mnsresque/runner', $params)->start();
+        return Mage::getModel('mnsresque/runner', $params)->start();
     }
 
     /**

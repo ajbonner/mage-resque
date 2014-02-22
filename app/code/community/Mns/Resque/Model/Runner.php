@@ -23,7 +23,7 @@ class Mns_Resque_Model_Runner extends Mage_Core_Model_Abstract
     const LOG_VERBOSE   = 'VVERBOSE';
 
     /**
-     * @return void
+     * @return int
      * @throws Exception
      */
     public function start()
@@ -31,8 +31,14 @@ class Mns_Resque_Model_Runner extends Mage_Core_Model_Abstract
         if (! $this->getConfig()) {
             throw new Exception('Cannot start resque runner without redis config set');
         }
+
         $command = $this->buildShellCommand($this->getConfig(), $this->getLogLevel(), $this->getQueue());
-        system($command);
+
+        $this->overrideSignalHandlers();
+
+        system($command, &$return);
+
+        return $return;
     }
 
     /**
@@ -50,7 +56,6 @@ class Mns_Resque_Model_Runner extends Mage_Core_Model_Abstract
             $this->getLogEnv($logLevel),
             Mage::getBaseDir() . DS . 'shell' . DS . 'resque');
     }
-
 
     /**
      * @param string $logLevel
@@ -71,6 +76,17 @@ class Mns_Resque_Model_Runner extends Mage_Core_Model_Abstract
         }
 
         return $logEnv;
+    }
+
+    protected function overrideSignalHandlers()
+    {
+        declare(ticks = 1);
+        pcntl_signal(SIGTERM, function(){});
+        pcntl_signal(SIGINT,  function(){});
+        pcntl_signal(SIGQUIT, function(){});
+        pcntl_signal(SIGUSR1, function(){});
+        pcntl_signal(SIGUSR2, function(){});
+        pcntl_signal(SIGCONT, function(){});
     }
 
     /**
