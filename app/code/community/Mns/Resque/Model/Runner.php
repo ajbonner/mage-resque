@@ -49,12 +49,14 @@ class Mns_Resque_Model_Runner extends Mage_Core_Model_Abstract
      */
     protected function buildShellCommand($config, $logLevel, $queue)
     {
-        return sprintf('REDIS_BACKEND=%s REDIS_BACKEND_DB=%s QUEUE=%s %s %s',
+        return sprintf('PIDFILE=%s REDIS_BACKEND=%s REDIS_BACKEND_DB=%s QUEUE=%s %s %s > %s 2>&1 &',
+            Mage::getBaseDir('log') . DS . 'mage-resque.pid',
             $config->getRedisBackend(),
             $config->getDatabase(),
             $this->getQueueEnv($queue),
             $this->getLogEnv($logLevel),
-            Mage::getBaseDir() . DS . 'shell' . DS . 'resque');
+            Mage::getBaseDir() . DS . 'shell' . DS . 'resque',
+            Mage::getBaseDir('log') . DS . 'mage-resque.log');
     }
 
     /**
