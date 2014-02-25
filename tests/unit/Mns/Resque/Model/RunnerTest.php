@@ -24,32 +24,21 @@ class Mns_Resque_Model_RunnerTest extends MageTest_PHPUnit_Framework_TestCase
 
     public function testDaemonRunsQueuedJob()
     {
-        $pid = $this->startDaemon();
+        $this->startDaemon();
         $message = 'Hello, world! - ' . microtime(true) * 1000;
         $this->client->addJob('Mns_Resque_Model_Job_Logmessage', array('message' => $message));
-        $this->stopDaemon($pid);
+        $this->stopDaemon();
         $this->assertSystemLogContains($message);
     }
 
     protected function startDaemon()
     {
-        $pid = pcntl_fork();
-
-        if (! $pid) {
-            putenv('QUEUE=*');
-            putenv('COUNT=1');
-            fclose(STDOUT);
             Mage::getModel('mnsresque/runner')->start();
-            exit(0);
-        }
-        usleep(1 * 1000000);
-        return $pid;
     }
 
     protected function stopDaemon($pid)
     {
-        posix_kill($pid, Mns_Resque_Model_Runner::SIGNAL_GRACEFUL);
-        pcntl_waitpid($pid, $status);
+        Mage::getModel('mnsresque/runner')->stop();
     }
 
     protected function assertSystemLogContains($message)

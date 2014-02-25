@@ -22,23 +22,101 @@ class Mns_Resque_Model_Runner extends Mage_Core_Model_Abstract
     const LOG_NORMAL    = 'VERBOSE';
     const LOG_VERBOSE   = 'VVERBOSE';
 
+    const DEFAULT_LOGFILE = 'mage-resque.log';
+    const DEFAULT_PIDFILE = 'mage-resque.pid';
+
+    /**
+     * @var string
+     */
+    protected $logfile = self::DEFAULT_LOGFILE;
+
+    /**
+     * @var string
+     */
+    protected $pidfile = self::DEFAULT_PIDFILE;
+
     /**
      * @return int
-     * @throws Exception
+     * @throws Mns_Resque_Model_ConfigurationException
      */
     public function start()
     {
         if (! $this->getConfig()) {
-            throw new Exception('Cannot start resque runner without redis config set');
+            throw new Mns_Resque_Model_ConfigurationException('Cannot start resque runner without redis config set');
         }
 
-        $command = $this->buildShellCommand($this->getConfig(), $this->getLogLevel(), $this->getQueue());
+        if ($this->isDaemonRunning()) {
+            throw new Mns_Resque_Model_DaemonAlreadyRunningException('Cannot start resque runner when daemon already running');
+        }
 
-        $this->overrideSignalHandlers();
-
+        $return = null;
+        $command = $this->buildStartShellCommand($this->getConfig(), $this->getLogLevel(), $this->getQueue());
+        $this->disableOwnSignalHandlers();
         system($command, &$return);
 
         return $return;
+    }
+
+    /**
+     * @param bool $stopImmediately
+     * @return int
+     * @throws Mns_Resque_Model_PidNotFoundException
+     */
+    public function stop($stopImmediately = false)
+    {
+        $return = null;
+        $command = $this->buildStopShellCommand();
+        system($command, &$return);
+
+        if ($return === 0) {
+            unlink($this->buildPidfilePath());
+        }
+
+        return $return;
+    }
+
+    /**
+     * @param string $logfile
+     * @return $this
+     */
+    public function setLogfile($logfile)
+    {
+        $this->logfile = $logfile;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLogfile()
+    {
+        return $this->logfile;
+    }
+
+    /**
+     * @param string $pidfile
+     * @return $this;
+     */
+    public function setPidfile($pidfile)
+    {
+        $this->pidfile = $pidfile;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPidfile()
+    {
+        return $this->pidfile;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDaemonRunning()
+    {
+        return file_exists($this->buildPidfilePath());
     }
 
     /**
@@ -47,16 +125,34 @@ class Mns_Resque_Model_Runner extends Mage_Core_Model_Abstract
      * @param string $queue
      * @return string
      */
-    protected function buildShellCommand($config, $logLevel, $queue)
+    protected function buildStartShellCommand($config, $logLevel, $queue)
     {
         return sprintf('PIDFILE=%s REDIS_BACKEND=%s REDIS_BACKEND_DB=%s QUEUE=%s %s %s > %s 2>&1 &',
-            Mage::getBaseDir('log') . DS . 'mage-resque.pid',
+            $this->buildPidfilePath(),
             $config->getRedisBackend(),
             $config->getDatabase(),
             $this->getQueueEnv($queue),
             $this->getLogEnv($logLevel),
             Mage::getBaseDir() . DS . 'shell' . DS . 'resque',
-            Mage::getBaseDir('log') . DS . 'mage-resque.log');
+            $this->buildLogfilePath());
+    }
+
+    /**
+     * @param bool $stopImmediately
+     * @return string
+     * @throws Mns_Resque_Model_PidNotFoundException
+     */
+    protected function buildStopShellCommand($stopImmediately = false)
+    {
+        $pid = file_get_contents($this->buildPidfilePath());
+
+        if (! $pid) {
+            throw new Mns_Resque_Model_PidNotFoundException('Cannot stop resque process pidfile not found: ' . Mage::getBaseDir('log') . DS . $this->pidfile);
+        }
+
+        $signal = ($stopImmediately) ? self::SIGNAL_TERMINATE : self::SIGNAL_GRACEFUL;
+
+        return sprintf('kill -%s %s', $signal, $pid);
     }
 
     /**
@@ -80,7 +176,11 @@ class Mns_Resque_Model_Runner extends Mage_Core_Model_Abstract
         return $logEnv;
     }
 
-    protected function overrideSignalHandlers()
+    /**
+     * Disabling this process's own signal handlers allows
+     * system()'d resque process handle them instead
+     */
+    protected function disableOwnSignalHandlers()
     {
         declare(ticks = 1);
         pcntl_signal(SIGTERM, function(){});
@@ -89,6 +189,22 @@ class Mns_Resque_Model_Runner extends Mage_Core_Model_Abstract
         pcntl_signal(SIGUSR1, function(){});
         pcntl_signal(SIGUSR2, function(){});
         pcntl_signal(SIGCONT, function(){});
+    }
+
+    /**
+     * @return string
+     */
+    protected function buildPidfilePath()
+    {
+        return Mage::getBaseDir('log') . DS . $this->getPidfile();
+    }
+
+    /**
+     * @return string
+     */
+    protected function buildLogfilePath()
+    {
+        return Mage::getBaseDir('log') . DS . $this->getLogFile();
     }
 
     /**
