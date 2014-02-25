@@ -80,20 +80,19 @@ PHP Resque is a Redis backed job queue, and you will need access to a running Re
         </mnsredis>
     </default>
 
-If you use Redis for Magento caching or as session store, e.g. you use [one of](https://github.com/colinmollenhour/Cm_Cache_Backend_Redis) Colin Mollenhour's [excellent modules](https://github.com/colinmollenhour/Cm_RedisSession), then make sure you select an alternate database, or better yet, a separate Redis instance, that is exclusively for Mage Resque. 
+If you use Redis for Magento caching or as a session store, e.g. you use [one of](https://github.com/colinmollenhour/Cm_Cache_Backend_Redis) [Colin Mollenhour's](https://twitter.com/colinmollenhour) [excellent modules](https://github.com/colinmollenhour/Cm_RedisSession), then make sure you select an alternate database, or better yet, a separate Redis instance that is exclusively for Mage Resque.
 
 ### Usage
-PHP Resque has two functions, 1. to add jobs to a Redis backed queue, and 2. to run the job queue.
+PHP Resque has two functions, to add jobs to Redis backed job queues, and to manage workers processing jobs from those queues.
 
-As an example, let's add a simple job to the queue that writes a message to Magento's system log. Mage Resque bundles Mns_Resque_Model_Job_Logmessage to do just this.
+As an example, let's add a simple job to a queue that writes a message to Magento's system log. Mage Resque bundles Mns_Resque_Model_Job_Logmessage to do just this.
 
-	$resque = Mage::getSingleton('mnsresque/factory')->create();
+    $resque = Mage::getSingleton('mnsresque/factory')->create();
     $resque->addJob(
     	'Mns_Resque_Model_Job_Logmessage',
-    	array('message'=>'foo'
-    );
+    	array('message'=>'foo'));
 
-You can pass any class name to addJob that implements a process() method. You can find out more about how Job classes work in the [PHP Redis README](https://github.com/chrisboulton/php-resque/blob/master/README.md).
+You can pass any classname to addJob that identifies a class implementing a process() method. You can find out more about how Job classes work in the [PHP Redis README](https://github.com/chrisboulton/php-resque/blob/master/README.md).
 
 To process the queue and run background jobs, Mage Resque provides a job runner in the shell directory. To start it run the following command from your terminal.
 
@@ -118,4 +117,4 @@ To run the tests, in your Magento root directory, issue the following command fr
 
     $ phpunit -c vendor/ajbonner/mage-resque/tests/phpunit.xml
 
-Feedback and pull requests are very welcome. You can get in touch with me on twitter @ajbonner or via the issues system here on github.
+Feedback and pull requests are very welcome. You can get in touch with me on twitter [@ajbonner](https://twitter.com/ajbonner) or via the [issues](https://github.com/ajbonner/mage-resque/issues) system here on github.
