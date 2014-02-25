@@ -1,6 +1,6 @@
 # Mage Resque
 
-Mage Resque is a lightweight [http://www.magentocommerce.com](Magento) module  implementing the [PHP Resque](https://github.com/chrisboulton/php-resque/) library. PHP Resque is a PHP Implementation of Ruby's [Resque](https://github.com/resque/resque), a Redis backed background job processing library.
+Mage Resque is a lightweight [Magento](http://www.magentocommerce.com) implementation of the [PHP Resque](https://github.com/chrisboulton/php-resque/) library and job runner. PHP Resque itself is based on Ruby's [Resque](https://github.com/resque/resque), a Redis backed background job processing library.
 
 ## Getting started
 
@@ -12,10 +12,10 @@ Mage Resque is covered by the [MIT](http://opensource.org/licenses/MIT) opensour
 - Redis 2.2+
 - ext-pcntl
 - Magento 1.7+
+- Composer
 
 ### Installation
-Mage Resque uses [Composer](http://getcomposer.org) and [Magento Composer Installer](https://github.com/magento-hackathon/magento-composer-installer) to handle installation of the module and its
-dependencies. To install Mage Resque you will need a copy of _composer.phar_ in your path. If you do not have it availble, run the following commands from your terminal.
+Mage Resque uses [Composer](http://getcomposer.org) and [Magento Composer Installer](https://github.com/magento-hackathon/magento-composer-installer) to handle installation of the module and its dependencies. To install Mage Resque you will need a copy of _composer.phar_ in your path. If you do not have it availble, run the following commands from your terminal.
 
     $ curl -sS https://getcomposer.org/installer | php
     $ chmod a+x composer.phar
@@ -99,6 +99,14 @@ To process the queue and run background jobs, Mage Resque provides a job runner 
 
     $ php shell/resque.php --daemon
     
+To stop the daemon gracefully (allow workers to finish their current job) run the following command.
+
+    $ php shell/resque.php --quit
+    
+To stop the daemon immediately (which means stopping workers potentially in the middle of a job) use the --terminate option.
+
+    $ php shell/resque.php --terminate
+    
 ### Running Unit Tests
 Mage Resque comes bundled with a UnitTest Suite. This suite serves as a regression safety net and as rough documentation on the use of the module. To execute the tests you will need to install Mage Resque's development dependencies. 
 
@@ -109,3 +117,5 @@ If you have ran _composer.phar install_, you will need to delete composer.lock a
 To run the tests, in your Magento root directory, issue the following command from your terminal.
 
     $ phpunit -c vendor/ajbonner/mage-resque/tests/phpunit.xml
+
+Feedback and pull requests are very welcome. You can get in touch with me on twitter @ajbonner or via the issues system here on github.
