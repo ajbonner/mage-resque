@@ -127,7 +127,7 @@ class Mns_Resque_Model_Runner extends Mage_Core_Model_Abstract
      */
     protected function buildStartShellCommand($config, $logLevel, $queue)
     {
-        return sprintf('PIDFILE=%s REDIS_BACKEND=%s REDIS_BACKEND_DB=%s QUEUE=%s %s %s > %s 2>&1 &',
+        return sprintf('PIDFILE=%s REDIS_BACKEND=%s REDIS_BACKEND_DB=%s QUEUE=%s %s nohup %s >> %s 2>&1 &',
             $this->buildPidfilePath(),
             $config->getRedisBackend(),
             $config->getDatabase(),
