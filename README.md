@@ -82,6 +82,17 @@ PHP Resque is a Redis backed job queue, and you will need access to a running Re
 
 If you use Redis for Magento caching or as a session store, e.g. you use [one of](https://github.com/colinmollenhour/Cm_Cache_Backend_Redis) [Colin Mollenhour's](https://twitter.com/colinmollenhour) [excellent modules](https://github.com/colinmollenhour/Cm_RedisSession), then make sure you select an alternate database, or better yet, a separate Redis instance that is exclusively for Mage Resque.
 
+If you are storing your binaries in a different directory, you can specify it in local.xml as well:
+
+    <default>
+        <mnsresque>
+           ...
+           <env>
+             <bin_dir>bin</bin_dir>
+           </env>
+        </mnsresque>
+    </default>
+
 ### Usage
 PHP Resque has two functions, to add jobs to Redis backed job queues, and to manage workers processing jobs from those queues.
 
