@@ -17,4 +17,12 @@ class Mns_Resque_Model_Config extends Mage_Core_Model_Abstract
     {
         return Mage::getStoreConfig('mnsresque/redis/database');
     }
+
+    /**
+     * @return string
+     */
+    public function getBinDir()
+    {
+        return Mage::getStoreConfig('mnsresque/env/bin_dir');
+    }
 }
