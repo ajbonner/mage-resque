@@ -52,7 +52,7 @@ class Mns_Resque_Model_Runner extends Mage_Core_Model_Abstract
         $return = null;
         $command = $this->buildStartShellCommand($this->getConfig(), $this->getLogLevel(), $this->getQueue());
         $this->disableOwnSignalHandlers();
-        system($command, &$return);
+        system($command, $return);
 
         return $return;
     }
@@ -65,8 +65,8 @@ class Mns_Resque_Model_Runner extends Mage_Core_Model_Abstract
     public function stop($stopImmediately = false)
     {
         $return = null;
-        $command = $this->buildStopShellCommand();
-        system($command, &$return);
+        $command = $this->buildStopShellCommand($stopImmediately);
+        system($command, $return);
 
         if ($return === 0) {
             unlink($this->buildPidfilePath());
