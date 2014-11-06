@@ -65,7 +65,7 @@ class Mns_Resque_Model_Runner extends Mage_Core_Model_Abstract
     public function stop($stopImmediately = false)
     {
         $return = null;
-        $command = $this->buildStopShellCommand();
+        $command = $this->buildStopShellCommand($stopImmediately);
         system($command, &$return);
 
         if ($return === 0) {
