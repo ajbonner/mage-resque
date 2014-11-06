@@ -133,7 +133,7 @@ class Mns_Resque_Model_Runner extends Mage_Core_Model_Abstract
             $config->getDatabase(),
             $this->getQueueEnv($queue),
             $this->getLogEnv($logLevel),
-            Mage::getBaseDir() . DS . 'shell' . DS . 'resque',
+            Mage::getBaseDir() . DS . $config->getBinDir() . DS . 'resque',
             $this->buildLogfilePath());
     }
 
