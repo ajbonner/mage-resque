@@ -72,12 +72,12 @@ PHP Resque is a Redis backed job queue, and you will need access to a running Re
 
     <!-- This is a child node of config for Magento CE -->
     <default>
-        <mnsredis>
+        <mnsresque>
             <redis>
                 <backend>localhost:6379</backend>
                 <database>1</database>
             </redis>
-        </mnsredis>
+        </mnsresque>
     </default>
 
 If you use Redis for Magento caching or as a session store, e.g. you use [one of](https://github.com/colinmollenhour/Cm_Cache_Backend_Redis) [Colin Mollenhour's](https://twitter.com/colinmollenhour) [excellent modules](https://github.com/colinmollenhour/Cm_RedisSession), then make sure you select an alternate database, or better yet, a separate Redis instance that is exclusively for Mage Resque.
