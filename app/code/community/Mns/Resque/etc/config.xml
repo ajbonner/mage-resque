@@ -26,6 +26,9 @@
                 <backend>localhost:6379</backend>
                 <database>4</database>
             </redis>
+            <env>
+                <bin_dir>shell</bin_dir>
+            </env>
         </mnsresque>
     </default>
 </config>
