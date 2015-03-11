@@ -7,17 +7,20 @@ class Mns_Shell_Resque extends Mage_Shell_Abstract
     public function run()
     {
         if ($this->getArg('daemon')) {
-            $this->startResqueDaemon();
+            exit($this->startResqueDaemon());
         } else if ($this->getArg('quit')) {
-            $this->stopResqueDaemon();
+            exit($this->stopResqueDaemon());
         } else if ($this->getArg('terminate')) {
-            $this->stopResqueDaemon(true);
+            exit($this->stopResqueDaemon(true));
         } else if ($this->getArg('test')) {
             $this->addJob('Mns_Resque_Model_Job_Logmessage', array('message' => 'Resque Test ' . time()));
+            exit(0);
         } else if ($this->getArg('test-sql')) {
             $this->addJob('Mns_Resque_Model_Job_Sqltest');
+            exit(0);
         } else {
             echo $this->usageHelp();
+            exit(0);
         }
     }
 
@@ -47,6 +50,7 @@ class Mns_Shell_Resque extends Mage_Shell_Abstract
 
     /**
      * @param bool $shouldKill Stop daemon immediately without letting child processes finish their work
+     * @return int resque process exit status code
      */
     protected function stopResqueDaemon($shouldKill = false)
     {
@@ -59,6 +63,8 @@ class Mns_Shell_Resque extends Mage_Shell_Abstract
         } else {
             $this->waitForDaemonToStop();
         }
+
+        return $returnStatus;
     }
 
     protected function waitForDaemonToStop()
