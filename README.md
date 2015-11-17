@@ -93,6 +93,20 @@ If you are storing your binaries in a different directory, you can specify it in
         </mnsresque>
     </default>
 
+You can configure the number of resque workers to start by adding a <num_workers/> element to your mnsresque env configuation:
+
+    <default>
+        <mnsresque>
+           ...
+           <env>
+             ...
+             <num_workers>4</num_workers>
+           </env>
+        </mnsresque>
+    </default>
+    
+All configuration options can be found in __app/code/community/ajbonner/mage-resque/etc/config.xml__ in the **defaults** section.
+
 ### Usage
 PHP Resque has two functions, to add jobs to Redis backed job queues, and to manage workers processing jobs from those queues.
 
