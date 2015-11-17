@@ -77,7 +77,8 @@ class Mns_Shell_Resque extends Mage_Shell_Abstract
      */
     public function usageHelp()
     {
-        $scriptNmae = $_SERVER['argv'][0];
+        $scriptName = $_SERVER['argv'][0];
+
         return <<<USAGE
 Usage:  php {$scriptName} -- [options]
   --daemon [--clean] Start Resque and fork into the background, when --clean specified stop any running resque processes.
