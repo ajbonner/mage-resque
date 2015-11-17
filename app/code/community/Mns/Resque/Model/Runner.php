@@ -38,6 +38,7 @@ class Mns_Resque_Model_Runner extends Mage_Core_Model_Abstract
     /**
      * @return int
      * @throws Mns_Resque_Model_ConfigurationException
+     * @throws Mns_Resque_Model_DaemonAlreadyRunningException
      */
     public function start()
     {
@@ -127,11 +128,12 @@ class Mns_Resque_Model_Runner extends Mage_Core_Model_Abstract
      */
     protected function buildStartShellCommand($config, $logLevel, $queue)
     {
-        return sprintf('PIDFILE=%s REDIS_BACKEND=%s REDIS_BACKEND_DB=%s QUEUE=%s %s nohup %s >> %s 2>&1 &',
+        return sprintf('PIDFILE=%s REDIS_BACKEND=%s REDIS_BACKEND_DB=%s QUEUE=%s COUNT=%s %s nohup %s >> %s 2>&1 &',
             $this->buildPidfilePath(),
             $config->getRedisBackend(),
             $config->getDatabase(),
             $this->getQueueEnv($queue),
+            $config->getNumWorkers(),
             $this->getLogEnv($logLevel),
             Mage::getBaseDir() . DS . $config->getBinDir() . DS . 'resque',
             $this->buildLogfilePath());

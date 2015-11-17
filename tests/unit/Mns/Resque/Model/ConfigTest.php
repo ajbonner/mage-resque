@@ -10,6 +10,7 @@ class Mns_Resque_Model_ConfigTest extends MageTest_PHPUnit_Framework_TestCase
         $config = Mage::getModel('mnsresque/config');
         $this->assertTrue($this->redisBackendIsSet($config));
         $this->assertTrue($this->defaultDatabaseIsSet($config));
+        $this->assertTrue($this->defaultWorkerCountIsSet($config));
     }
 
     /**
@@ -28,5 +29,14 @@ class Mns_Resque_Model_ConfigTest extends MageTest_PHPUnit_Framework_TestCase
     protected function defaultDatabaseIsSet($inConfig)
     {
         return 4 == $inConfig->getDatabase();
+    }
+
+    /**
+     * @param Mns_Resque_Model_Config $inConfig
+     * @return bool
+     */
+    protected function defaultWorkerCountIsSet($inConfig)
+    {
+        return 1 == $inConfig->getNumWorkers();
     }
 }

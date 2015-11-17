@@ -25,4 +25,13 @@ class Mns_Resque_Model_Config extends Mage_Core_Model_Abstract
     {
         return Mage::getStoreConfig('mnsresque/env/bin_dir');
     }
+
+    /**
+     * @return int
+     */
+    public function getNumWorkers()
+    {
+        return Mage::getStoreConfig('mnsresque/env/num_workers');
+    }
+
 }
