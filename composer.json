@@ -2,6 +2,7 @@
     "name": "ajbonner/mage-resque",
     "homepage": "https://github.com/ajbonner/mage-resque",
     "description": "Magento integration for php-rescue the redis backed job queue library",
+    "keywords": ["magento", "resque", "job", "queue"],
     "type": "magento-module",
     "license": "MIT",
     "authors": [
@@ -12,8 +13,8 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "ajbonner/magento-composer-autoload": "*",
-        "chrisboulton/php-resque": "dev-master",
-        "magento-hackathon/magento-composer-installer": "*"
+        "ajbonner/magento-composer-autoload": "0.1.1",
+        "chrisboulton/php-resque": "dev-master#df69e8980cc21652f10cd775cb6a0e8c572ffd2d",
+        "magento-hackathon/magento-composer-installer": "~0.1"
     }
 }
