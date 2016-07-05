@@ -1,6 +1,6 @@
 <?php
 
-require 'abstract.php';
+require realpath(dirname(__FILE__) . '/../../../../shell/') . '/abstract.php';
 
 class Mns_Shell_Resque extends Mage_Shell_Abstract
 {
