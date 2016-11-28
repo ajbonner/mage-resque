@@ -1,1 +1,4 @@
 .idea
+composer.lock
+/store
+vendor
