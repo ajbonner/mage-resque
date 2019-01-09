@@ -8,10 +8,10 @@ Mage Resque is a lightweight [Magento](http://www.magentocommerce.com) implement
 Mage Resque is covered by the [MIT](http://opensource.org/licenses/MIT) opensource licence. Unless specifically stated otherwise, terms of use are as laid out in the included LICENCE file.
 
 ### Requirements
-- PHP 5.3+
+- PHP 7.2+
 - Redis 2.2+
 - ext-pcntl
-- Magento 1.7+
+- Magento 1.9.3.9+
 - Composer
 
 ### Installation
