@@ -13,7 +13,7 @@
     ],
     "require": {
         "php": ">=7.2.0",
-        "ajbonner/magento-composer-autoload": "^0.2.0",
+        "ajbonner/magento-composer-autoload": "^0.3.0",
         "chrisboulton/php-resque": "dev-master#df69e8980cc21652f10cd775cb6a0e8c572ffd2d",
         "magento-hackathon/magento-composer-installer": "~3.2.0"
     },
