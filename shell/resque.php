@@ -1,6 +1,10 @@
 <?php
 
-require realpath(dirname(__FILE__) . '/../../../../shell/') . '/abstract.php';
+if (file_exists(__DIR__ . '/abstract.php')) {
+    require __DIR__ . '/abstract.php';
+} else {
+    require dirname(__DIR__, 4) . '/shell/' . '/abstract.php';
+}
 
 class Mns_Shell_Resque extends Mage_Shell_Abstract
 {
